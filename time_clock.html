@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Examples</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+<style>
+    *{margin: 0;padding:0;list-style-type: none;}
+    .div1{ border-radius: 50%; box-shadow: 0 1px 3px black; width: 300px; height: 300px;border:1px solid black; position: relative; transform:translate(500px,10px); }
+    .hours,.min,.sec,.deg,.div1 em strong,.div1 em,.cap{ position: absolute;left: 50%;top: 50%;}
+    .div1 .hours{width: 10px; height: 80px; background: black;margin-top: -80px;margin-left: -5px;}
+    .div1 .min{width: 8px; height: 100px; background: black;margin-top: -100px;margin-left: -4px;}
+    .div1 .sec{width: 2px; height: 120px; background: red;margin-top: -120px;margin-left: -1px;}
+    .div1 .deg{top: 0;width: 4px; height: 10px; background: black;}
+    .cap{width:30px; height:30px;border-radius:50%; background:#000; margin:-15px;}
+    .div1 em strong{top: 10px;margin-left: -20px;width: 40px;text-align: center; font-weight: normal;}
+    .div1 span{transform-origin: center bottom ;}
+    .div1 em.on{ margin-left:-2px;width:4px; height:12px;}
+    .div1 em{top:0; margin-left:-1px;width:2px; height:8px; background:#000; transform-origin:center 150px;}
+</style>
+</head>
+<body>
+    <div class="div1">
+        <span class="hours"></span>
+        <span class="min"></span>
+        <span class="sec"></span>
+        <span class="cap"></span>
+        <!-- <i class="deg"><strong>12</strong></i> -->
+    </div>
+    <script type="text/javascript">
+    var oDiv = document.querySelectorAll('.div1')[0];
+    var hours = document.querySelectorAll('.hours')[0];
+    var min = document.querySelectorAll('.min')[0];
+    var sec = document.querySelectorAll('.sec')[0];
+    var cap = document.querySelectorAll('.cap')[0];
+
+    function clock (){  
+        var d = new Date();
+        var h = d.getHours();
+        var m = d.getMinutes();
+        var s = d.getSeconds();
+        var iMs = d.getMilliseconds();
+        hours.style.transform = 'rotate('+ (h*30 +m/60*30)+'deg)';
+        min.style.transform = 'rotate('+ (m*6 + s/60*6)+'deg)';
+        sec.style.transform = 'rotate('+ (s*6 + iMs/1000*6)+'deg)';
+    }
+    //创建刻度
+    for( var i = 0; i < 60 ; i++ ){
+        var em = document.createElement('em');
+        oDiv.appendChild( em );
+        if( i%5 == 0 ){
+            em.classList.add('on');
+            em.innerHTML = "<strong>"+(i==0?12:i/5)+"</strong>";
+            em.children[0].style.transform = "rotate(-"+i*6+"deg)";
+        }         
+        em.style.transform = "rotate("+i*6+"deg)";  
+    }
+    clock();
+    var timer = setInterval(clock,1000);
+    </script>
+</body>
+</html>
