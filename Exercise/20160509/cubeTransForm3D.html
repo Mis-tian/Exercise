@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Examples</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+<style type="text/css">
+    *{margin:0;padding: 0; list-style: none;}
+    html{overflow: hidden;}
+
+    .div1{width: 200px;height: 200px;position: relative;text-align: center;line-height: 200px;color: #000;
+        font-size: 30px; #ccc;margin: 100px auto;
+        transform:perspective(800px) rotateX(-45deg) rotateY(0deg);
+        transform-style:preserve-3d;
+        transition:3s all ease;
+
+
+    }
+
+    .div1 div{position: absolute;width: 198px;height: 198px;border:1px solid #000;}
+    .div1 .front{transform:translateZ(100px);}
+    .div1 .back{transform:translateZ(-100px);}
+    .div1 .left{transform: rotateY(-90deg) translateZ(100px);}
+    .div1 .right{transform:rotateY(90deg) translateZ(100px);}    
+    .div1 .top{transform:rotateX(90deg) translateZ(100px);}
+    .div1 .bottom{transform:rotateX(-90deg) translateZ(100px);}     
+
+    .div1:active{transform:perspective(800px) rotateX( -15deg ) rotateY(360deg); }
+</style>
+</head>
+<body>
+    <div class="div1">
+        <div class="front">前面</div>
+        <div class="back">后面</div>
+        <div class="left">左面</div>
+        <div class="right">右面</div>
+        <div class="top">上面</div>
+        <div class="bottom">下面</div>
+    </div>
+    <script type="text/javascript">
+        var oDiv = document.querySelector('.div1');
+
+
+    </script>
+</body>
+</html>
