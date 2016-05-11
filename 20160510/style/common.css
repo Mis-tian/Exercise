@@ -1,0 +1,62 @@
+@charset "utf-8";
+/* CSS by www.zhinengshe.com */
+/*清零*/
+body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div,dl,dt,dd,input{margin:0;padding:0;border:0;}
+body{font-size:12px; /*font-family:"Microsoft YaHei";*/font-family:Verdana;}
+ul,ol{list-style-type:none;}
+select,img{vertical-align:middle;}
+a{text-decoration:none;}
+
+body{background:url(../img/back.jpg) left top repeat;}
+.videoBox{width:800px; overflow:hidden; margin:0 auto; height:540px; background:url(../img/video_bg.jpg) left bottom no-repeat; position:relative; margin-top:40px;}
+.video{width:100%; height:500px; position:relative; background:url(../img/zns.png) center 35% no-repeat;}
+.open{width:158px; background:url(../img/openFell.png) left top no-repeat; height:42px; position:absolute; top:70%; left:50%; margin-left:-79px; display:none;}
+/*打开文件*/
+.openLink{width:292px;height:32px; background:url(../img/openLink.png) left top no-repeat; position:absolute; top:65%; left:50%; margin-left:-146px;}
+.openLink .input{width:188px; margin-left:2px; height:30px; background:transparent; outline:none; padding:0 5px; color:#FFF; float:left; font-family:Verdana;}
+.openBtn{background:#FFF; height:30px; width:90px; background:transparent; float:left;}
+.loading{position:absolute; width:102px; height:108px; left:50%; top:50%; margin-left:-51px; margin-top:-54px;}
+/*列表*/
+.video_list{width:20%; float:left; height:540px; background:#333; position:relative;}
+.listBtnOpen{width:10px; height:58px; position:absolute; right:-10px; background:url(../img/listBtn_l.png) left top no-repeat; top:50%; position:absolute; margin-top:-50px; z-index:2;}
+.listBtnOpen:hover{background:url(../img/listBtn_l_h.png) left top no-repeat;}
+.listBtnContraction{width:10px; height:58px; position:absolute; right:0; background:url(../img/listBtn_r.png) left top no-repeat; top:50%; position:absolute; margin-top:-50px; z-index:2; display:none;}
+.listBtnContraction:hover{background:url(../img/listBtn_r_h.png);}
+/*列表内容*/
+.list{overflow:hidden; margin-top:5px;}
+.list dt{height:23px; background:url(../img/dtBg.png) left top repeat-x; line-height:23px; color:#CCC;}
+.list dt span{margin-left:10px; line-height:22px;}
+.list dd{line-height:22px;color:#999;padding-left:10px;	overflow:hidden;}
+.list dd a{color:#999; float:left; width:105px;white-space:nowrap;text-overflow:ellipsis; overflow:hidden;}
+.list dd a:hover{color:#FFF;}
+.list dd span{float:right; margin-right:10px;}
+/*播放器*/
+.video_play{float:left; width:80%;}
+/*操作*/
+.videoBar{height:43px; bottom:0; width:100%;}
+.videoBar .play{float:left;}
+.videoBar .play img{float:left;}
+.videoBar .full{float:right;}
+/*进度*/
+.speed{height:6px; border-radius:3px; border:#CCC solid 1px; margin-top:-54px; bottom:45px;margin-left:0.35%; font-family:Verdana; font-size:0; width:99%; position:absolute;}
+.speed_buffer{background:#666; width:55%; height:6px; font-family:Verdana; font-size:0;}
+.speed_this{background:#999; width:25%; height:6px; font-family:Verdana; font-size:0; margin-top:-6px; position:relative;}
+.volume{width:100px; border:#CCC solid 1px; height:6px; border-radius:3px; margin-top:15px; margin-right:5px; float:right;}
+.volume_this{background:#999; width:45%; height:6px; font-family:Verdana; font-size:0; position:relative;}
+.button{width:12px;height:12px;border-radius:50%;background:#FFF;position:absolute;top:-3px;right:0; cursor:pointer;}
+/*timer*/
+.timer{width:130px; float:left; margin-top:10px; color:#CCC;}
+.timeThis{color:#FFF;}
+
+#video_div { width:100%; height:100%; left:0; top:0; position:absolute; background:black; display:none;}
+#video_div video {position:absolute; width:90%; height:90%; left:5%; top:5%;}
+
+
+
+
+
+
+
+
+
+

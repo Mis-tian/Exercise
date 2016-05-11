@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>智能社视频播放器 - by 智能社 - www.zhinengshe.com</title>
+<link href="style/common.css" rel="stylesheet" />
+<script src="src/js/sea.js"></script>
+<script>
+    seajs.config({
+        base:'./build/js'
+    });
+    seajs.use(['main.js']);
+</script>
+</head>
+
+<body>
+<div class="videoBox">
+	<div class="video_list" style="width:0%;">
+    	<dl class="list">
+        	<dt><span>智能社播放列表</span></dt>
+        	<dd><a href="#">智能社影片剪辑</a><span>20分15秒</span></dd>
+        </dl>
+        <a href="javascript:;" class="listBtnContraction">&nbsp;</a>
+        <a href="javascript:;" class="listBtnOpen">&nbsp;</a>
+    </div>
+    <div class="video_play" style="width:100%;">
+    	<div class="video">
+			<div id="video_open_div" style="display:none;">
+				<img src="img/loading.png" class="loading" alt="" style="display:none;" />
+				<input type="button" class="open" value="" />
+				<div class="openLink">
+					<input type="text" value="" class="input" />
+					<input type="button" value="" class="openBtn" />
+				</div>
+			</div>
+			<div id="video_div" style="display:block;">
+				 
+                <video id="v1" width="100%" height="100%" src="media/64036020120714021103.mp4"></video>
+			</div>
+        </div>
+        <div class="videoBar">
+        	<!--播放 暂停 等操作部分-->
+            <div class="play">
+                <img id="stop" src="img/stop.png" alt="www.zhinengshe.com" />
+				<img id="prev" src="img/prev.jpg" alt="www.zhinengshe.com" />
+				<img id="play" src="img/play.jpg" alt="www.zhinengshe.com" />
+				<img id="pause" src="img/pause.jpg" alt="www.zhinengshe.com" style="display:none;" />
+				<img id="next" src="img/next.jpg" alt="www.zhinengshe.com" />
+            </div>
+            <!--声音-->
+            <div class="full">
+            	<div class="timer">
+                	<span class="timeThis" id="curTime">00:00</span>/<span id="totalTime">00:00</span>
+                </div>
+                
+                <div class="volume">
+                    <div class="volume_this" style="width:100%;"><div class="button"></div></div>
+                </div>
+                <img src="img/horn.png" style="float:right; margin-top:13px; margin-right:10px;" />
+            </div>
+        </div>
+        <!--进度条-->
+        <div class="speed">
+            <div class="speed_buffer" style="width:0%;"></div>
+            <div class="speed_this" style="width:0%;"><div class="button"></div></div>
+        </div>
+    </div>
+    
+</div>
+</body>
+</html>
