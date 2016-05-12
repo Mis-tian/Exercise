@@ -11,7 +11,7 @@
     *{margin: 0;padding: 0;list-style: none;}
     html{ overflow: hidden; }
     body{ background: black; }
-    .ul1{position: relative;width: 133px;height: 200px; margin:150px auto 0;background: #ccc;
+    .ul1{position: relative;width: 133px;height: 200px; margin:150px auto 0;/* background: #ccc; */
         transform-style:preserve-3d; 
         transform:perspective(800px) rotateX(-30deg) rotateY(0deg);
     }
@@ -50,24 +50,74 @@
         var oUl = document.querySelector('.ul1');
         var aLi = oUl.children;
         var len = aLi.length;
-        var i = 0;
-
-        var i = len - 1;
+        var bLeft = false,bRight = false,bTop = false,bBottom = false;
+        var x = -130;
+        var y = 0;
+        var num = len - 1;
         for (var j = 0; j < len; j++) {
             var oSpan = document.createElement('span');
             oSpan.style.background = 'url(./img/'+(j+1)+'.jpg) no-repeat';
             aLi[j].appendChild(oSpan);
         };
-        var timer = setInterval(function(){
-            aLi[i].style.webkitTransform = 'rotateY('+(360/len)*i+'deg) translateZ(300px) ';
-            i--;
-            if(i < 0){
-                clearInterval(timer);
-            }            
-        
-
+        var timer1 = setInterval(function(){
+            aLi[num].style.transform = 'rotateY('+(360/len)*num+'deg) translateZ(300px) '; 
+            console.log(num);   
+            num--;            
+            if(num < 0){
+                clearInterval(timer1);
+            }    
         },200);
+        var timer = setInterval(function(){
+            if( bLeft ){
+                y -= 10;
+            }
+            if( bRight ){
+                y += 10;
+            }
+            if( bTop ){
+                x += 10;
+            }
+            if( bBottom ){
+                x -= 10;
+            }
+             oUl.style.transform = "perspective(800px) rotateX("+x/5+"deg) rotateY("+y/5+"deg)";
 
+        },30);
+        document.onkeydown = function(ev){
+            var keyCode = ev.keyCode;
+            switch( keyCode ){
+                    case 37 ://左
+                        bLeft = true;
+                        break;
+                    case 38 ://上
+                        bTop = true;
+                        break;
+                    case 39 ://右
+                        bRight = true;
+                        break;
+                    case 40 ://下
+                        bBottom = true;
+                        break;
+            }
+        }
+
+        document.onkeyup = function(ev){
+            var keyCode = ev.keyCode;
+            switch( keyCode ){
+                    case 37 ://左
+                        bLeft = false;
+                        break;
+                    case 38 ://上
+                        bTop = false;
+                        break;
+                    case 39 ://右
+                        bRight = false;
+                        break;
+                    case 40 ://下
+                        bBottom = false;
+                        break;
+            }
+        }        
     </script>
 </body>
 </html>
