@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>scale</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="viewport" content="width=320,initial-scale=1,user-scalable=no">
+<link href="" rel="stylesheet">
+<style>
+    .div1{width:200px; height:200px; line-height:200px; text-align:center; -webkit-transform:scale(1); background:#ccc; margin:100px auto;}
+</style>
+</head>
+<body>
+    <div class="div1">scale</div>
+    <script type="text/javascript">
+
+    window.onload = function(){
+        var oDiv = document.querySelector('.div1');
+        var dbClick = false;
+        function dbTouch( obj,fn ){//模仿移动端双击事件
+            obj.addEventListener('touchstart',function(ev){
+                if( dbClick ){
+                    fn && fn.call(this,ev);
+                }
+                dbClick = true;
+                setTimeout(function(){
+                    dbClick = false;
+                },200);
+            },false);
+        }
+        var off = true;
+        dbTouch(oDiv,function(ev){
+            if( off ){
+                this.style.webkitTransform = 'scale(2)';
+            }else{
+                this.style.webkitTransform = 'scale(1)';
+            }
+            off = !off;
+        });
+    }
+    </script>
+</body>
+</html>

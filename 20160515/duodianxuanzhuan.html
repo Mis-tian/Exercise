@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Examples</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="viewport" content="width=320,initial-scale=1,user-scalable=no">
+<link href="" rel="stylesheet">
+<style>
+    .div1{width:200px; height:200px; line-height:200px; text-align:center; background:#ccc; margin:100px auto;}
+</style>
+</head>
+<body>
+    <div class="div1">旋转</div>
+    <script type="text/javascript">
+    function a2d (n){
+        return n*180/Math.PI;
+    }
+    window.onload = function(){
+        var oDiv = document.querySelector('.div1');
+            var d = 0;//老值
+            oDiv.addEventListener('touchstart',function(ev){
+                var oldD = d;//老值
+                function getD (ev){
+                    var x1 = ev.targetTouches[0].pageX;
+                    var y1 = ev.targetTouches[0].pageY;
+                    var x2 = ev.targetTouches[1].pageX;
+                    var y2 = ev.targetTouches[1].pageY;
+
+                    var x = x1 - x2;
+                    var y = y2 - y1;
+
+                    return a2d( Math.atan2( y,x ) );
+                }
+
+                if( ev.targetTouches.length == 2 ){
+                    var downD = getD(ev);
+                }
+                
+                function fnMove(ev){
+                    if( ev.targetTouches.length == 2 ){
+                        d = oldD + downD - getD(ev);
+                        oDiv.style.webkitTransform = 'rotate('+d+'deg)';
+                    }
+                }
+                function fnEnd(ev){
+                    oDiv.removeEventListener('touchmove',fnMove,false);
+                    oDiv.removeEventListener('touchend',fnEnd,false);                    
+                }
+                oDiv.addEventListener('touchmove',fnMove,false);
+                oDiv.addEventListener('touchend',fnEnd,false);
+                ev.preventDefault();
+            },false);
+    }
+    </script>
+</body>
+</html>

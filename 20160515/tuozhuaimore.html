@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Examples</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="viewport" content="width=320,initial-scale=1,user-scalable=no"/>
+<link href="" rel="stylesheet">
+<style type="text/css">
+    .div1{background: gray;width: 100px; height: 100px;position: absolute;top: 0;left: 0;}
+</style>
+</head>
+<body>
+    <div class="div1"></div>
+    <div class="div1"></div>
+    <div class="div1"></div>
+    <script type="text/javascript">
+    window.onload = function(){
+
+        var aDiv = document.querySelectorAll('.div1');
+        for (var i = 0; i < aDiv.length; i++) {
+            run(aDiv[i]);
+        };
+        function run (obj){
+            obj.addEventListener('touchstart',function(ev){
+                var disX = ev.targetTouches[ev.targetTouches.length-1].pageX - obj.offsetLeft;
+                var disY = ev.targetTouches[ev.targetTouches.length-1].pageY - obj.offsetTop;
+                
+                var id = ev.targetTouches[ev.targetTouches.length-1].identifier;
+                if(ev.targetTouches.length == 0){//重1开始 1代表第一个手指
+                    alert(0)
+                }
+                function fnMove(ev){                 
+                    for (var i = 0; i < ev.targetTouches.length; i++) {
+                        if( ev.targetTouches[i].identifier == id ){
+                            obj.style.left = ev.targetTouches[i].pageX - disX + 'px';
+                            obj.style.top = ev.targetTouches[i].pageY - disY + 'px';
+                            break;
+                        }
+                    };
+                }
+                function fnEnd(ev){
+                    for (var i = 0; i < ev.changedTouches.length; i++) {
+                        if( ev.changedTouches.identifier == id ){
+                            obj.removeEventListener('touchmove',fnMove,false);
+                            obj.removeEventListener('touchend',fnEnd,false);
+                            break;
+                        }
+                    };
+                }
+
+                obj.addEventListener('touchmove',fnMove,false);
+                obj.addEventListener('touchend',fnEnd,false);
+                ev.preventDefault();
+            },false);
+        }
+
+    
+    }
+    </script>
+</body>
+</html>

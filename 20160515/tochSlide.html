@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>touchSlide</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+<style type="text/css">
+    *{margin: 0;padding: 0;list-style: none;}
+    html{font-size: 20px;}
+    .div1{background: gray;width:16rem ;height: 7.5rem; position: relative;margin: 0 auto; overflow: hidden;}
+    .div1 ul{width: 200000px; height: 7.5rem; -webkit-transform:translateX(0); }
+    .div1 li{
+        float: left;
+        width: 16rem;
+        height: 7.5rem;
+        color: #fff;
+        font-size: 1rem;
+        line-height: 7.5rem;
+        text-align: center;
+    }
+    
+</style>
+</head>
+<body>
+    <div class="div1">
+        <ul id="ul">
+            <li style="background:red;">1</li>
+            <li style="background:yellow;">2</li>
+            <li style="background:blue;">3</li>
+        </ul>
+    </div>
+    <script>
+
+
+    window.onload = window.onresize= function(){
+        //页面初始化 rem
+        var rem = 20;
+        rem = 20/320*document.documentElement.clientWidth;
+        document.documentElement.style.fontSize = rem + "px";    
+        var oDiv = document.querySelector('.div1');    
+        var oUl = document.querySelector('#ul');
+        var aLi = oUl.querySelectorAll('li');
+        var len = aLi.length;
+        oDiv.style.width = document.documentElement.clientWidth/rem+'rem';
+        var x = 0;//ul的left一开始是0
+        oUl.addEventListener('touchstart',function(ev){
+            this.style.webkitTransition = 'none';
+            var disX = ev.targetTouches[ev.targetTouches.length-1].pageX/rem - x;//this.offsetLeft
+            function fnMove(ev){
+                //this.style.left = ev.targetTouches[ev.targetTouches.length-1].pageX - disX +'rem';
+                x = ev.targetTouches[ev.targetTouches.length-1].pageX/rem - disX;
+                this.style.webkitTransform = 'translateX('+x+'rem)';
+            }
+            function fnEnd(ev){
+                var n = Math.round( x / ( aLi[0].offsetWidth/rem ) * -1 );
+                if( n < 0  ) n = 0;
+                if( n >= len) n = aLi.length-1;
+                this.style.webkitTransition = '0.7s all ease';
+                //this.style.left = -n * aLi[0].offsetWidth + 'px';
+                x = -n * aLi[0].offsetWidth/rem;
+                
+                this.style.webkitTransform = 'translateX('+x+'rem)';
+
+            }
+            oUl.addEventListener('touchmove',fnMove,false);
+            oUl.addEventListener('touchend',fnEnd,false);
+            ev.preventDefault();
+        },false);
+
+        /*oLi.w = 100
+
+        //left都为负值所以*-1 Ul的left和Li的width 是个比例
+
+        oUl.left        -1        /100      round                 index
+            0             0        0                                            0
+         -40px           40px       0.4                                         0
+         -90px           90px       0.9                                         1
+         -130px          130px      1.3                                         1
+         -188px          188px      1.88                                          2
+         -230px          230px      2.3                                         2
+         -280px          280px      2.8                                         3
+        --------------------------------------------- */
+    }
+    </script>
+</body>
+</html>
