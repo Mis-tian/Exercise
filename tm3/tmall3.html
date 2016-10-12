@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="智能社 - zhinengshe.com" />
+<meta name="copyright" content="智能社 - zhinengshe.com" />
+<meta name="viewport" content="width=320,initial-scale=1,user-scalable=no"/>
+<title>智能社 - www.zhinengshe.com</title>
+<style>
+*{margin:0;padding:0;list-style:none;}
+html{font-size:20px;}
+#div1{ position:relative;width:16rem; height:7.5rem; background:#ccc; margin:0 auto;overflow:hidden;}
+#div1 ul{width:160rem; height:7.5rem; transform:translateX(0px); }
+#div1 ul li{float:left;width:16rem; height:100%; line-height:7.5rem; text-align:center; font-size:1rem;}
+</style>
+<script>
+var rem = 20;
+window.onresize = function(){
+	/*
+		标准字体大小 20     新的字体大小？？
+		---------      =  ------
+		标准设备宽度 320    新设备宽度 clientWidth
+	*/
+	rem = 20/320*document.documentElement.clientWidth;
+	document.documentElement.style.fontSize = rem + "px";	
+};
+
+window.onload = function(){
+	//页面初始化 rem
+	rem = 20/320*document.documentElement.clientWidth;
+	document.documentElement.style.fontSize = rem + "px";
+	
+	var oDiv = document.getElementById("div1");
+	var oUl  = oDiv.children[0];
+	var aLi  = oUl.children;
+	var len  = aLi.length;
+	
+	
+	var x = 0;
+	oUl.addEventListener("touchstart",function(ev){
+		//取消运动
+		oUl.style.transition = "none";
+		var disX = ev.targetTouches[0].pageX/rem - x;
+		
+		function fnMove(ev){
+			//oUl.style.left = ev.targetTouches[0].pageX - disX + "px";	
+			
+			x = ev.targetTouches[0].pageX/rem - disX;
+			oUl.style.transform = "translateX("+x+"rem)";
+		}
+		
+		function fnEnd(){
+			oUl.removeEventListener("touchmove",fnMove,false);
+			oUl.removeEventListener("touchend",fnEnd,false);
+			
+			//确定显示第几个
+			var n = Math.round(-x/(aLi[0].offsetWidth/rem));
+			if(n < 0){
+				n = 0;
+			} else if(n >= len){
+				n = len - 1;
+			}
+			console.log(n);
+			
+			//添加运动 transition:0.7s all ease;
+			oUl.style.transition = "0.7s all ease";
+			
+			//oUl.style.left = -n*aLi[0].offsetWidth + "px";
+			x = -n*(aLi[0].offsetWidth/rem);
+			oUl.style.transform = "translateX("+x+"rem)";
+		}
+		
+		oUl.addEventListener("touchmove",fnMove,false);
+		oUl.addEventListener("touchend",fnEnd,false);
+		ev.preventDefault();	
+	},false);
+	
+ 
+};
+</script>
+</head>
+
+<body>
+<div id="div1">
+	<ul>
+    	<li style="background:#F3FAB9;">0</li>
+    	<li style="background:#3ABFF9;">1</li>
+    	<li style="background:#F3ABF9;">2</li>
+    	<li style="background:#3AFBF9;">3</li>
+    </ul>
+</div>
+</body>
+</html>
