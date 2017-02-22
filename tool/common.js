@@ -11,8 +11,297 @@
  * @version $Id$
  */
 
-// add an appropriate event listener
+class AppUtils {
 
+  dateFormat(timeStamp, mode) {
+    let format = mode || 'yyyy-MM-dd hh:mm:ss',
+      date = new Date(parseInt(timeStamp)),
+      year = date.getFullYear(),
+      month = date.getMonth() + 1,
+      day = date.getDate(),
+      hours = date.getHours(),
+      minutes = date.getMinutes(),
+      seconds = date.getSeconds(),
+      weekday = date.getDay();
+
+    function getWeekDayNameByNumber(number) {
+      let re = null;
+      switch (number) {
+        case 0:
+          re = '日';
+          break;
+        case 1:
+          re = '一';
+          break;
+        case 2:
+          re = '二';
+          break;
+        case 3:
+          re = '三';
+          break;
+        case 4:
+          re = '四';
+          break;
+        case 5:
+          re = '五';
+          break;
+        case 6:
+          re = '六';
+          break;
+      }
+      return re || number;
+    }
+
+    let results = format.replace(/yyyy/g, year)
+      .replace(/MM/g, month < 10 ? '0' + month : month)
+      .replace(/dd/g, day < 10 ? '0' + day : day)
+      .replace(/hh/g, hours < 10 ? '0' + hours : hours)
+      .replace(/mm/g, minutes < 10 ? '0' + minutes : minutes)
+      .replace(/ss/g, seconds < 10 ? '0' + seconds : seconds)
+      .replace(/WW/g, getWeekDayNameByNumber(weekday));
+
+    return results;
+  }
+
+  /*
+   * 将字符串形式的时间定义装换为毫秒
+   * @method Store.cAbstractStore._getLifeTime
+   * @param {String} liftTime 格式如 2M 单位定义M月, D天,H小时, M分, S秒
+   * @returns {number} 根据liftTime 计算要增加的毫秒数
+   * @description } 根据liftTime 计算要增加的毫秒数
+   */
+  getLifeTime(liftTime) {
+    var timeout = 0;
+    var unit = liftTime.charAt(liftTime.length - 1);
+    var num = +liftTime.substring(0, liftTime.length - 1);
+    if (typeof unit == 'number') {
+      unit = 'M';
+    } else {
+      unit = unit.toUpperCase();
+    }
+
+    if (unit == 'D') {
+      timeout = num * 24 * 60 * 60;
+    } else if (unit == 'H') {
+      timeout = num * 60 * 60;
+    } else if (unit == 'M') {
+      timeout = num * 60;
+    } else if (unit == 'S') {
+      timeout = num;
+    } else {
+      //默认为秒
+      timeout = num * 60;
+    }
+    return timeout * 1000;
+  }
+}
+
+const appUtils = new AppUtils();
+
+
+
+class LocalStorage {
+  setObject(key, value) {
+    if (window.localStorage) {
+      window.localStorage[key] = JSON.stringify(value);
+    }
+  }
+
+  getObject(key) {
+    let obj = window.localStorage[key];
+    try {
+      return obj ? JSON.parse(obj) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /**
+   * 获取有效缓存
+   * @param {String} key 键值
+   */
+  getCache(key) {
+    let obj = this.getObject(key),
+      now = new Date().getTime();
+    if (obj && obj.timeout > now) {
+      return obj.data;
+    } else {
+      this.remove(key);
+      return null;
+    }
+  }
+
+  /**
+   * 保存存在有效期的缓存
+   * @param {String} key
+   * @param {Object} value
+   * @parame {number} timeout
+   */
+  setCache(key, value, timeout = 86400000) {
+    let deathTime = new Date().getTime() + timeout;
+    let obj = {
+      data: value,
+      timeout: deathTime
+    }
+    this.setObject(key, obj);
+  }
+  remove(key) {
+    delete window.localStorage[key];
+  }
+}
+const lStorage = new LocalStorage();
+
+class SessionStorage {
+  setObject(key, value) {
+    if (window.sessionStorage) {
+      window.sessionStorage[key] = JSON.stringify(value);
+    }
+  }
+  getObject(key) {
+    let obj = window.sessionStorage[key];
+    try {
+      return obj ? JSON.parse(obj) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+  remove(key) {
+    delete window.sessionStorage[key];
+  }
+}
+const sStorage = new SessionStorage();
+
+
+
+  // 获取第一个滚动父节点
+  // 为了更精确计算请使用 getComputedStyle 获取计算后的样式
+  getScrollParent(node) {
+    if (!node) {
+      return document;
+    }
+    const excludeStaticParent = node.style.position === 'absolute';
+    const overflowRegex = /(scroll|auto)/;
+    let parent = node;
+    while (parent) {
+      if (!parent.parentNode || (parent.parentNode === (node.ownerDocument || document))) {
+        return node.ownerDocument || document;
+      }
+      // const { position, overflow, overflowX, overflowY } = parent.style;
+      const { position, overflow, overflowX, overflowY } = getComputedStyle(parent);
+      if (position === 'static' && excludeStaticParent) {
+        continue;
+      }
+      if (overflowRegex.test(overflow + overflowX + overflowY)) {
+        return parent;
+      }
+      parent = parent.parentNode;
+    }
+    return node.ownerDocument || document ? document.querySelector('body') : null;
+  }
+
+  /**
+   * 四个角都在屏幕中,才返回true
+   */
+  checkInScreen2(node, offsetX = 0, offsetY = 0) {
+    let wW = window.innerWidth,
+      wH = window.innerHeight;
+    let {top, bottom, left, right} = node.getBoundingClientRect();
+    if (top >= offsetY && bottom <= wH && left >= offsetX && right <= wW) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getTransitionEndEvent() {
+    let div = document.createElement('div'),
+      TransitionEndEvent = {
+        WebkitTransition: 'webkitTransitionEnd',
+        MozTransition: 'transitionend',
+        OTransition: 'oTransitionEnd otransitionend',
+        transition: 'transitionend'
+      },
+      transitionEnd;
+
+    for (let name in TransitionEndEvent) {
+      if (typeof div.style[name] !== 'undefined') {
+        transitionEnd = TransitionEndEvent[name];
+
+        // 缓存 不用重新计算
+        this.getTransitionEndEvent = function () {
+          return transitionEnd;
+        };
+
+        div = TransitionEndEvent = null;
+
+        return transitionEnd;
+      }
+    }
+  }
+
+  /**
+   * 在元素上注册事件
+   */
+  on(el, type, fun) {
+    let listeners = this._getEvents(el, type);
+    let hasListener = false;
+    for (var i = 0; i < listeners.length; i++) {
+      if (listeners[i].name == fun.name) {
+        hasListener = true;
+        break;
+      }
+    }
+    //如果这个函数没有注册过,新注册
+    if (!hasListener) {
+      el.addEventListener(type, fun);
+      listeners.push(fun);
+      this._addEvent(el, type, listeners);
+    }
+  }
+
+  /**
+   * 取消某个监听
+   */
+  off(el, type, fun) {
+    if (!fun) {
+      this.offAll(el.type);
+    } else {
+      let listeners = this._getEvents(el, type);
+      for (var i = 0; i < listeners.length; i++) {
+        if (listeners[i].name == fun.name) {
+          listeners.splice(i, 1);
+        }
+      }
+      el.removeEventListener(type, fun);
+    }
+  }
+
+  /**
+   * 移除元素上某个类型的所有监听,
+   */
+  offAll(el, type) {
+    let listeners = this._getEvents(el, type);
+    for (var i = 0; i < listeners.length; i++) {
+      el.removeEventListener(type, listeners[i]);
+    }
+    listeners = [];
+  }
+
+  /**
+   * 注册scrollEnd 事件
+   */
+  onScrollEnd(el, callback) {
+    var self = this;
+    this.on(el, 'scroll', function (e) {
+      self.evt = e;
+      clearTimeout(self.scrollTimeout);
+      self.scrollTimeout = setTimeout(function () {
+        callback && callback(self.evt);
+        self.evt = null;
+      }, 1000);
+    })
+  }
+    // add an appropriate event listener
     // document.addEventListener("myEvent", function(e) { console.log( e.target ) });
     // trigger(document,'myEvent',{myEvent:11111});
 function trigger ( dom,e,detail ){
