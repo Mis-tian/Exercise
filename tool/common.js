@@ -11,7 +11,25 @@
  * @version $Id$
  */
 
+// add an appropriate event listener
 
+    // document.addEventListener("myEvent", function(e) { console.log( e.target ) });
+    // trigger(document,'myEvent',{myEvent:11111});
+function trigger ( dom,e,detail ){
+    var event = null;
+    try{
+        event = new CustomEvent(e,{
+            detail:detail,
+            bubbles: true,
+            cancelable: true		 				
+        });
+    }catch(error){
+        console.log(error);
+        event = document.createEvent('CustomEvent');
+        event.initCustomEvent( e,true,true,detail );
+    }
+    dom.dispatchEvent(event);
+}
 function jsonp(options){
     //0.    整理参数
     options=options||{};
