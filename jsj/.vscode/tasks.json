@@ -1,0 +1,23 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "0.1.0",
+    "command": "echo",
+    "isShellCommand": true,
+    "args": ["Hello World"],
+    "showOutput": "always"
+}
+
+// {
+//     "version": "0.1.0",
+//     // 要使用的命令或者可执行文件的路径
+//     "command": "echo",
+//     // 对应command参数，是否是一个命令，否则为执行文件路径
+//     "isShellCommand": true,
+//     // 是否在执行task任务时显示控制台窗口
+//     "showOutput": "always",
+//     // 对应command参数指定程序的参数
+//     "args": ["-p", "src", "--allowJs", "-w"],
+//     // 不太明白这个，基本用不到
+//     "problemMatcher": "$tsc",
+// }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+
+  <group name="hosts">
+    <property name="API" defaultValue="https://api.test.pajkdc.com/m.api" description="API网关地址"/>
+    <property name="TFS" defaultValue="https://static.test.pajkdc.com/v1/tfs" description="文件网关地址-公有"/>
+  </group>
+
+  <script>
+    <generate template="config.js.vm" destfile="config.js" charset="UTF-8"/>
+  </script>
+
+</config>

@@ -1,0 +1,7 @@
+NUONUO_SETTINGS = {
+  API: '${API}',
+  TFS: '${TFS}'
+};
+
+
+

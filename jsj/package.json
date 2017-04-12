@@ -1,0 +1,51 @@
+{
+  "name": "newPject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development node ./server.js --host=0.0.0.0",
+    "clean": "rimraf dist/*",
+    "dist": "cross-env npm run clean & NODE_ENV=production webpack --progress --colors",
+    "config": "jar cvf temp.zip ./META-INF/ && java -jar autoconfig -I -u nuonuo.properties temp.zip && unzip temp.zip -d temp && mv ./temp/config.js ./ && rm -rf temp.zip temp"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "latest",
+    "babel-loader": "latest",
+    "babel-plugin-import": "latest",
+    "babel-plugin-transform-runtime": "latest",
+    "babel-preset-es2015": "latest",
+    "babel-preset-react": "latest",
+    "babel-preset-react-hmre": "latest",
+    "babel-preset-stage-0": "latest",
+    "babel-register": "latest",
+    "cross-env": "latest",
+    "css-loader": "^0.x.x",
+    "express": "latest",
+    "extract-text-webpack-plugin": "^1.x.x",
+    "html-webpack-plugin": "^2.x.x",
+    "node-sass": "^4.5.2",
+    "postcss-loader": "latest",
+    "precss": "latest",
+    "rimraf": "latest",
+    "sass-loader": "^4.x.x",
+    "style-loader": "^0.x.x",
+    "webpack": "^1.x.x",
+    "webpack-dev-middleware": "^1.10.1",
+    "webpack-hot-middleware": "^2.18.0"
+  },
+  "dependencies": {
+    "antd": "^2.x.x",
+    "react": "^15.x.x",
+    "react-dom": "^15.x.x",
+    "react-highcharts": "latest",
+    "react-redux": "^4.x.x",
+    "react-router": "^3.x.x",
+    "react-router-redux": "^4.x.x",
+    "redux": "^3.x.x",
+    "redux-thunk": "^2.x.x",
+    "whatwg-fetch": "^2.x.x"
+  }
+}
