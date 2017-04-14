@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+  <group name="hosts">
+    <property name="API" defaultValue="http://braavos.test.pajkdc.com" description="API网关地址"/>
+    <property name="FILES_PUBLIC" defaultValue="http://static.test.pajkdc.com/v1/tfs" description="文件网关地址-公有"/>
+    <property name="WEBLOGIN_HOST" defaultValue="http://test.pajkdc.com" description="商城地址"/>
+    <property name="FILEGW_HOST" defaultValue="http://filegw.test.pajkdc.com" description="filegw上传地址"/>
+    <property name="LOG_HOST" defaultValue="http://beacon.test.pajkdc.com" description="日志地址"/>
+    <property name="PAJK_HOST" defaultValue="https://www.test.pajkdc.com" description="pajk域名"/>
+  </group>
+  <script>
+    <generate template="config.js.vm" destfile="config.js" charset="UTF-8"/>
+  </script>
+
+</config>

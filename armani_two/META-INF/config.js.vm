@@ -1,0 +1,8 @@
+window.Settings = {
+  API: '${API}',
+  WEBLOGIN_HOST: '${WEBLOGIN_HOST}',
+  FILES_PUBLIC: '${FILES_PUBLIC}/',
+	FILEGW_HOST: '${FILEGW_HOST}',
+  LOG_HOST: '${LOG_HOST}/js/beacon.js',
+  PAJK_HOST: '${PAJK_HOST}'
+};
